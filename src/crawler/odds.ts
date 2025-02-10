@@ -5,13 +5,13 @@ export type Score = {
 }
 
 export type EventState = {
-  sportEventId: String;
-  sportId: String;
-  competitionId: String;
-  startTimestamp: Number;
-  homeCompetitorId: String;
-  awayCompetitorId: String;
-  sportEventStatusId: String;
+  sportEventId: string;
+  sportId: string;
+  competitionId: string;
+  startTimestamp: number;
+  homeCompetitorId: string;
+  awayCompetitorId: string;
+  sportEventStatusId: string;
   scores: Score[];
 };
 

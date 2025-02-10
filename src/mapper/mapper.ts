@@ -1,4 +1,4 @@
-import { getMapping } from "./api-client";
+import { getMapping } from "../api-client";
 
 type Mapping = {
   [key: string]: string;

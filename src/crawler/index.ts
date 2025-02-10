@@ -1,2 +1,2 @@
 export { startPolling } from "./poller";
-export { newMapper } from "./mapper";
+export type { EventState } from "./odds";

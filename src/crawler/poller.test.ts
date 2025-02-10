@@ -1,9 +1,8 @@
 import { describe, expect, it, vi, MockInstance, afterEach } from 'vitest';
-import * as apiClient from './api-client';
+
+import * as apiClient from '../api-client';
+
 import { startPolling } from './poller';
-vi.mock('./api-client', () => ({
-  getState: vi.fn()
-}))
 
 describe('startPolling', () => {
   let getStateMock: MockInstance;

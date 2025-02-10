@@ -1,4 +1,4 @@
-import { getState } from "./api-client";
+import { getState } from "../api-client";
 import { EventState, parseOdds } from "./odds";
 
 type StopFunction = () => void;

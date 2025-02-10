@@ -1,6 +1,9 @@
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
+
+import { getMapping } from '../api-client';
+
 import { Mapper, newMapper, parseMapping, MappingNotFoundError } from './mapper';
-import { getMapping } from './api-client';
+
 
 const stringifiedMapping = "29190088-763e-4d1c-861a-d16dbfcf858c:Real Madrid;33ff69aa-c714-470c-b90d-d3883c95adce:Barcelona;b582b685-e75c-4139-8274-d19f078eabef:Manchester United";
 const parsedMapping = {
@@ -9,7 +12,7 @@ const parsedMapping = {
   "b582b685-e75c-4139-8274-d19f078eabef": "Manchester United"
 }
 
-vi.mock('./api-client', () => ({
+vi.mock('../api-client', () => ({
   getMapping: vi.fn()
 }))
 
