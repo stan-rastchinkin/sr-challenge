@@ -2,15 +2,16 @@ import { startPolling } from "./crawler";
 import { startServer } from "./server";
 
 import type { EventState } from "./crawler";
+import { config } from "./config";
 
 const store: { events: EventState[] } = {
   events: [],
 }
 
-const POLL_INTERVAL_MAX = 950; // todo: make this configurable
-
 const main = async () => {
-  const stop = startPolling(store, POLL_INTERVAL_MAX);
+  console.info(`Starting crawler with MAX_POLL_INTERVAL: ${config.maxPollInterval}ms`);
+  console.info(`Consuming from: ${config.sourceBaseUrl}`);
+  const stop = startPolling(store, config.maxPollInterval);
 
   const server = await startServer(store);
 

@@ -1,11 +1,11 @@
 import * as http from 'node:http';
+import { config } from './config';
 
-const SOURCE_BASE_URL = 'http://localhost:3000'; // todo: Replace with env variable
-const REQUEST_TIMEOUT = 950;
+const REQUEST_TIMEOUT = config.maxPollInterval;
 
 export const getState = (): Promise<{ odds: string }> => {
     return new Promise((resolve, reject) => {
-        const request = http.get(`${SOURCE_BASE_URL}/api/state`, (response) => {
+        const request = http.get(`${config.sourceBaseUrl}/api/state`, (response) => {
             let data = '';
 
             response.on('data', (chunk) => {
@@ -15,7 +15,6 @@ export const getState = (): Promise<{ odds: string }> => {
             response.on('end', () => {
                 if (response.statusCode === 200) {
                     try {
-                        // todo: validate data
                         resolve(JSON.parse(data));
                     } catch (error) {
                         reject(new Error('Failed to parse odds'));
@@ -39,7 +38,7 @@ export const getState = (): Promise<{ odds: string }> => {
 
 export const getMapping = (): Promise<{ mappings: string }> => {
   return new Promise((resolve, reject) => {
-    const request = http.get(`${SOURCE_BASE_URL}/api/mappings`, (response) => {
+    const request = http.get(`${config.sourceBaseUrl}/api/mappings`, (response) => {
       let data = '';
 
       response.on('data', (chunk) => {
@@ -49,7 +48,6 @@ export const getMapping = (): Promise<{ mappings: string }> => {
       response.on('end', () => {
         if (response.statusCode === 200) {
           try {
-            // todo: validate data
             resolve(JSON.parse(data));
           } catch (error) {
             reject(new Error('Failed to parse mappings'));

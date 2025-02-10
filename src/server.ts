@@ -3,8 +3,7 @@ import http from "node:http";
 import { newResponseFormatter } from "./format-response/";
 
 import type { EventState } from "./crawler";
-
-const PORT = 8000; // todo: make this configurable
+import { config } from "./config";
 
 export const startServer = async (store: {events: EventState[]}): Promise<http.Server> => {
   const formatResponseObject = await newResponseFormatter();
@@ -47,8 +46,8 @@ export const startServer = async (store: {events: EventState[]}): Promise<http.S
   };
 
   const server = http.createServer(requestListener);
-  server.listen(PORT, "localhost", () => {
-    console.log(`Server is running on port: ${PORT}`);
+  server.listen(config.port, "localhost", () => {
+    console.info(`Server is running on port: ${config.port}`);
   });
 
   return server;
