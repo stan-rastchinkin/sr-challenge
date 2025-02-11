@@ -1,8 +1,8 @@
 import { startPolling } from "./crawler";
 import { startServer } from "./server";
+import { config } from "./config";
 
 import type { EventState } from "./crawler";
-import { config } from "./config";
 
 const store: { events: EventState[] } = {
   events: [],

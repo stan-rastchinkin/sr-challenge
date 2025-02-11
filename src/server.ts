@@ -5,44 +5,31 @@ import { newResponseFormatter } from "./format-response/";
 import type { EventState } from "./crawler";
 import { config } from "./config";
 
+const respond = (res: http.ServerResponse, status: number, payload: any) => {
+  const body = JSON.stringify(payload);
+  return res
+    .writeHead(status, { "Content-Length": body.length, "Content-Type": "application/json" })
+    .end(body);
+}
+
 export const startServer = async (store: {events: EventState[]}): Promise<http.Server> => {
   const formatResponseObject = await newResponseFormatter();
-
-  const respond500 = (res: http.ServerResponse): http.ServerResponse => {
-    const body = JSON.stringify({ error: "Internal server error" });
-    return res
-      .writeHead(500, { "Content-Length": body.length, "Content-Type": "application/json" })
-      .end(body);
-  }
-
-  const respond404 = (res: http.ServerResponse): http.ServerResponse => {
-    const body = JSON.stringify({ message: "Not found" });  
-    return res
-      .writeHead(404, { "Content-Length": body.length, "Content-Type": "application/json" })
-      .end(body);
-  }
-
-  const respondOk = async (res: http.ServerResponse, events: EventState[]): Promise<http.ServerResponse> => {
-    const body = JSON.stringify(await formatResponseObject(events));
-    return res
-      .writeHead(200, { "Content-Length": body.length, "Content-Type": "application/json" })
-      .end(body);
-  }
 
   const requestListener = async (req: http.IncomingMessage, res: http.ServerResponse) => {
     if (req.url === "/client/state") {
 
       try {
-        await respondOk(res, store.events);
+        respond(res, 200, await formatResponseObject(store.events));
       } catch (error) {
         console.error(error);
-        respond500(res);
+        res.writeHead(500, { "Content-Type": "text/plain" });
+        res.end("Internal server error");
       }
 
       return;
     }
 
-    respond404(res);
+    respond(res, 404, { message: "Not found" });
   };
 
   const server = http.createServer(requestListener);
