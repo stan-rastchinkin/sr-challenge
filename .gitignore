@@ -18,8 +18,6 @@ dist/
 
 .DS_Store
 
-.env
-
 tmp/
 
 .clinic/

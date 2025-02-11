@@ -4,8 +4,8 @@
   "description": "SR",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "start:dev": "npm run build && dotenv -e .env -- npm run start",
+    "start": "dotenv -e .env -- node dist/index.js",
+    "start:dev": "npm run build && npm run start",
     "build": "tsc --project tsconfig.build.json",
     "test": "dotenv -e .env -- vitest run --coverage"
   },
