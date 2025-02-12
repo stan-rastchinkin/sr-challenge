@@ -5,3 +5,19 @@ services:
     image: mysteriouscrawler/test
     ports:
       - "3000:3000"
+    expose:
+      - "3000"
+  crawler:
+    # I couldn't find a way to set up a healthcheck on the simulator
+    # without extending it's image. Thus I couldn't make crawler start
+    # to depend on the simulator.
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      PORT: 8000
+      MAX_POLL_INTERVAL: 950
+      SOURCE_BASE_URL: http://simulation:3000

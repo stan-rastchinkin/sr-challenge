@@ -33,7 +33,7 @@ export const startServer = async (store: {events: EventState[]}): Promise<http.S
   };
 
   const server = http.createServer(requestListener);
-  server.listen(config.port, "localhost", () => {
+  server.listen(config.port, "0.0.0.0", () => {
     console.info(`Server is running on port: ${config.port}`);
   });
 
